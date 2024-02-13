@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { ContactsTable } from './contacts-table';
-import { contactSchema } from './contact';
+import { contactSchema } from '~/app/contacts/[id]/page';
 
 export const Contacts = () => {
   const { data, isLoading } = useQuery({

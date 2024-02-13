@@ -1,6 +1,6 @@
 'use client';
 
-import type { contactSchema } from './contact';
+import type { contactSchema } from '~/app/contacts/[id]/page';
 import type { z } from 'zod';
 import Link from 'next/link';
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
@@ -21,7 +21,7 @@ const columns: ColumnDef<Contacts>[] = [
     accessorKey: 'name',
     header: 'Név',
     cell: ({ row }) => (
-      <Link href={`/contact/${row.original.id}`} className="text-blue-400 underline">
+      <Link href={`/contacts/${row.original.id}`} className="text-blue-400 underline">
         {row.original.name}
       </Link>
     ),
