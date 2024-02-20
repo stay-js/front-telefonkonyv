@@ -54,7 +54,10 @@ const defaultValues: FormSchema = {
   notes: '',
 };
 
-export const EditPage: React.FC = () => {
+export const EditPage: React.FC<{
+  id?: number;
+  initialValues?: FormSchema;
+}> = ({ id, initialValues }) => {
   const {
     register,
     handleSubmit,
@@ -62,13 +65,16 @@ export const EditPage: React.FC = () => {
     reset,
     setValue,
     getValues,
-  } = useForm<FormSchema>({ resolver: zodResolver(formSchema), defaultValues });
+  } = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    defaultValues: initialValues ?? defaultValues,
+  });
 
   const { mutate } = useMutation({
     mutationFn: async (data: Data) => {
-      return fetch('http://localhost:285/contacts', {
-        method: 'POST',
-        body: JSON.stringify(data),
+      return fetch(`http://localhost:285/${id ? `contacts/${id}` : 'contacts'}`, {
+        method: id ? 'PUT' : 'POST',
+        body: JSON.stringify({ ...data, id }),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -85,12 +91,12 @@ export const EditPage: React.FC = () => {
   });
 
   const onSubmit = (data: FormSchema) => {
-    mutate({
-      ...data,
-      birth: format(data.birth, 'yyyy-MM-dd'),
-    });
-    reset(defaultValues);
-    setDate(defaultValues.birth);
+    mutate({ ...data, birth: format(data.birth, 'yyyy-MM-dd') });
+
+    if (!id) {
+      reset(defaultValues);
+      setDate(defaultValues.birth);
+    }
   };
 
   const [date, setDate] = useState<Date | undefined>(getValues('birth'));

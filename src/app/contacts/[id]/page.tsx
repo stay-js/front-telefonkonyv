@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
+import { toast } from 'sonner';
 import { cn } from '~/utils/cn';
 import { buttonVariants } from '~/components/ui/button';
 import { DeleteDialog } from '~/components/delete-dialog';
-import { toast } from 'sonner';
 
 export const contactSchema = z.object({
   id: z.number(),
@@ -51,16 +51,10 @@ const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
       return res.json();
     },
     onSuccess: () => {
-      toast.success('Névjegy törölve', {
-        description: 'A névjegy sikeresen törölésre került.',
-      });
+      toast.success('Névjegy törölve', { description: 'A névjegy sikeresen törölésre került.' });
       router.push('/');
     },
-    onError: (error) => {
-      toast.error('Hiba történt', {
-        description: error.message,
-      });
-    },
+    onError: (error) => toast.error('Hiba történt', { description: error.message }),
   });
 
   return (
