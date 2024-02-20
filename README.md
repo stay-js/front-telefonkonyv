@@ -24,7 +24,7 @@ pnpm install
 pnpm dev
 ```
 
-## A feladat elkészítéséheez használt technológiák:
+## A feladat elkészítéséhez használt technológiák:
 
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
