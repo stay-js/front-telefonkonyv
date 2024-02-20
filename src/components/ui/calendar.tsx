@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { DayPicker } from 'react-day-picker';
 import { cn } from '~/utils/cn';
 import { buttonVariants } from '~/components/ui/button';
@@ -52,9 +52,9 @@ export const Calendar = ({
     }}
     components={{
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+      IconLeft: ({ ...props }) => <FaChevronLeft size={12} />,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+      IconRight: ({ ...props }) => <FaChevronRight size={12} />,
     }}
     {...props}
   />

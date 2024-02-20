@@ -46,7 +46,7 @@ const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   });
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-12">
+    <main className="container flex flex-col gap-4 py-12">
       {isLoading && <div>Loading...</div>}
       {!isLoading && !data && <div>Error</div>}
 

@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { TbCalendar } from 'react-icons/tb';
-import { format } from 'date-fns';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { Input } from '~/components/ui/input';
@@ -14,6 +13,12 @@ import { Textarea } from '~/components/ui/textarea';
 import { Button } from '~/components/ui/button';
 import { Calendar } from '~/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+
+const dateFormatter = new Intl.DateTimeFormat('fr-CA', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
 
 export const formSchema = z.object({
   name: z
@@ -30,7 +35,8 @@ export const formSchema = z.object({
   address: z
     .string()
     .min(20, { message: 'A cím minimum 20 karakterből kell álljon!' })
-    .max(125, { message: 'A cím maximum 125 karakter lehet!' }),
+    .max(125, { message: 'A cím maximum 125 karakter lehet!' })
+    .nullable(),
   birth: z
     .date()
     .min(new Date(1920, 0, 1), { message: 'A születésnap nem lehet 1920.01.01 előtti!' })
@@ -48,7 +54,7 @@ const defaultValues: FormSchema = {
   phone: '',
   email: '',
   address: '',
-  birth: new Date(2000, 0, 1),
+  birth: new Date(),
   company: '',
   role: '',
   notes: '',
@@ -61,7 +67,7 @@ export const EditPage: React.FC<{
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors },
     reset,
     setValue,
     getValues,
@@ -70,7 +76,9 @@ export const EditPage: React.FC<{
     defaultValues: initialValues ?? defaultValues,
   });
 
-  const { mutate } = useMutation({
+  const [date, setDate] = useState<Date>(getValues('birth'));
+
+  const { mutate, status } = useMutation({
     mutationFn: async (data: Data) => {
       return fetch(`http://localhost:285/${id ? `contacts/${id}` : 'contacts'}`, {
         method: id ? 'PUT' : 'POST',
@@ -91,19 +99,13 @@ export const EditPage: React.FC<{
   });
 
   const onSubmit = (data: FormSchema) => {
-    mutate({ ...data, birth: format(data.birth, 'yyyy-MM-dd') });
+    mutate({ ...data, birth: dateFormatter.format(data.birth) });
 
     if (!id) {
       reset(defaultValues);
       setDate(defaultValues.birth);
     }
   };
-
-  const [date, setDate] = useState<Date | undefined>(getValues('birth'));
-
-  useEffect(() => {
-    if (date) setValue('birth', date);
-  }, [date, setValue]);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -153,11 +155,21 @@ export const EditPage: React.FC<{
           <PopoverTrigger asChild>
             <Button variant="outline" className="flex w-full items-center justify-start gap-2">
               <TbCalendar size={16} />
-              {date ? format(date, 'yyyy-MM-dd') : <span>Válasszon dátumot</span>}
+              {dateFormatter.format(date)}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
-            <Calendar mode="single" selected={date} onSelect={setDate} initialFocus />
+            <Calendar
+              mode="single"
+              selected={getValues('birth')}
+              onSelect={(date) => {
+                if (!date) return;
+
+                setDate(date);
+                setValue('birth', date);
+              }}
+              initialFocus
+            />
           </PopoverContent>
         </Popover>
 
@@ -182,8 +194,8 @@ export const EditPage: React.FC<{
         {errors.notes && <span className="text-xs text-red-500">{errors.notes.message}</span>}
       </div>
 
-      <Button type="submit" className="w-fit" disabled={isLoading}>
-        {isLoading ? 'Folyamatban...' : 'Mentés'}
+      <Button type="submit" className="w-fit" disabled={status === 'pending'}>
+        {status === 'pending' ? 'Folyamatban...' : 'Mentés'}
       </Button>
     </form>
   );
