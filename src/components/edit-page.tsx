@@ -108,25 +108,33 @@ export const EditPage: React.FC<{
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="name">Teljes név</Label>
+        <Label htmlFor="name">
+          Teljes név <span className="text-red-500">*</span>
+        </Label>
         <Input type="text" id="name" placeholder="Minta János" {...register('name')} />
         {errors.name && <span className="text-xs text-red-500">{errors.name.message}</span>}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="phone">Telefonszám</Label>
-        <Input type="text" id="phone" placeholder="+36 1 1111 111" {...register('phone')} />
+        <Label htmlFor="phone">
+          Telefonszám <span className="text-red-500">*</span>
+        </Label>
+        <Input type="text" id="phone" placeholder="+36-30-111-11-11" {...register('phone')} />
         {errors.phone && <span className="text-xs text-red-500">{errors.phone.message}</span>}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email cím</Label>
+        <Label htmlFor="email">
+          Email cím <span className="text-red-500">*</span>
+        </Label>
         <Input type="text" id="email" placeholder="example@example.com" {...register('email')} />
         {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="address">Cím</Label>
+        <Label htmlFor="address">
+          Cím <span className="text-red-500">*</span>
+        </Label>
         <Input
           type="text"
           id="address"
@@ -137,7 +145,9 @@ export const EditPage: React.FC<{
       </div>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="birth">Születésnap</Label>
+        <Label htmlFor="birth">
+          Születésnap <span className="text-red-500">*</span>
+        </Label>
 
         <Popover>
           <PopoverTrigger asChild>
@@ -156,7 +166,7 @@ export const EditPage: React.FC<{
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="company">Vállalat</Label>
-        <Input type="company" id="company" placeholder="Minta Corp." {...register('company')} />
+        <Input type="company" id="company" placeholder="Minta Zrt." {...register('company')} />
         {errors.company && <span className="text-xs text-red-500">{errors.company.message}</span>}
       </div>
 

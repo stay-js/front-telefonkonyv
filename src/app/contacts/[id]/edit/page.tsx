@@ -6,7 +6,7 @@ import { contactSchema } from '~/utils/contact';
 
 const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const { data, isLoading } = useQuery({
-    queryKey: ['contact'],
+    queryKey: ['contact', id],
     queryFn: async () => {
       const res = await fetch(`http://localhost:285/contacts/${id}`);
       if (!res.ok) throw new Error(res.statusText);

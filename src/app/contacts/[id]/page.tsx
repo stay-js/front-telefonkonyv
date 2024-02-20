@@ -24,7 +24,7 @@ const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const router = useRouter();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['contact'],
+    queryKey: ['contact', id],
     queryFn: async () => {
       const res = await fetch(`http://localhost:285/contacts/${id}`);
       if (!res.ok) throw new Error(res.statusText);
