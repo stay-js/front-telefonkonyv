@@ -33,8 +33,8 @@ export const formSchema = z.object({
     .max(125, { message: 'A cím maximum 125 karakter lehet!' }),
   birth: z
     .date()
-    .min(new Date(1920, 1, 1), { message: 'A születésnap nem lehet 1920.01.01 előtti!' })
-    .max(new Date(2020, 1, 1), { message: 'A születésnap nem lehet 2020.01.01 utáni!' }),
+    .min(new Date(1920, 0, 1), { message: 'A születésnap nem lehet 1920.01.01 előtti!' })
+    .max(new Date(2020, 0, 1), { message: 'A születésnap nem lehet 2020.01.01 utáni!' }),
   company: z.string().max(40, { message: 'A cég maximum 40 karakter lehet!' }).optional(),
   role: z.string().max(20, { message: 'A beosztás maximum 20 karakter lehet!' }).optional(),
   notes: z.string().max(200, { message: 'A jegyzet maximum 200 karakter lehet!' }).optional(),
