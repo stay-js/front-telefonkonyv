@@ -1,6 +1,6 @@
 # Telefonkönyv
 
-### JSON Server port: 285
+[Telefonkönyv](https://lab.frontend.idnotes.wiki/frameworks/vue/contacts) feladat megoldása, Next.JS használatával.
 
 ## Telepítés:
 
@@ -23,6 +23,8 @@ pnpm install
 ```bash
 pnpm dev
 ```
+
+### JSON Server port: 285
 
 ## A feladat elkészítéséhez használt technológiák:
 
