@@ -3,23 +3,11 @@
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { z } from 'zod';
 import { toast } from 'sonner';
 import { cn } from '~/utils/cn';
+import { contactSchema } from '~/utils/contact';
 import { buttonVariants } from '~/components/ui/button';
 import { DeleteDialog } from '~/components/delete-dialog';
-
-export const contactSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  phone: z.string(),
-  email: z.string(),
-  birth: z.string(),
-  company: z.string(),
-  role: z.string(),
-  address: z.string(),
-  notes: z.string(),
-});
 
 const Card: React.FC<{
   title: string;
@@ -70,14 +58,12 @@ const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
             <div className="flex gap-2">
               <Link
                 href={`/contacts/${id}/edit`}
-                className={buttonVariants({
-                  variant: 'outline',
-                })}
+                className={buttonVariants({ variant: 'outline' })}
               >
                 Módosítás
               </Link>
 
-              <DeleteDialog action={() => mutate()} />
+              <DeleteDialog action={mutate} />
             </div>
           </div>
 

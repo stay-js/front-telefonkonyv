@@ -1,11 +1,19 @@
-import '~/styles/globals.css';
+import type { Metadata, Viewport } from 'next';
 import { ReactQueryWrapper } from './react-query-wrapper';
 import { Toaster } from '~/components/ui/sonner';
 import { Navigation } from '~/components/navigation';
 
-export const metadata = {
+import '~/styles/globals.css';
+
+export const metadata: Metadata = {
   title: 'Telefonkönyv',
   description: 'Telefonkönyv',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  colorScheme: 'light',
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (

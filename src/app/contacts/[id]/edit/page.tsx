@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { EditPage } from '~/components/edit-page';
-import { contactSchema } from '~/app/contacts/[id]/page';
+import { contactSchema } from '~/utils/contact';
 
 const Page: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const { data, isLoading } = useQuery({

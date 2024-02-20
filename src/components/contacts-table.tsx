@@ -1,7 +1,6 @@
 'use client';
 
-import type { contactSchema } from '~/app/contacts/[id]/page';
-import type { z } from 'zod';
+import type { Contact } from '~/utils/contact';
 import Link from 'next/link';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import {
@@ -13,9 +12,7 @@ import {
   TableRow,
 } from '~/components/ui/table';
 
-type Contacts = z.infer<typeof contactSchema>;
-
-export const ContactsTable: React.FC<{ data: Contacts[] }> = ({ data }) => {
+export const ContactsTable: React.FC<{ data: Contact[] }> = ({ data }) => {
   const table = useReactTable({
     data,
     columns: [

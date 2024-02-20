@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import { contactSchema } from '~/app/contacts/[id]/page';
+import { contactSchema } from '~/utils/contact';
 import { ContactsTable } from '~/components/contacts-table';
 
 const Page = () => {
